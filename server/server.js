@@ -12,9 +12,9 @@ app.use('/public', express.static(path.join(__dirname, '../dist')));
 
 app.get('*', function (req, res) {
   const appString = ReactSSR.renderToString(serverEntry);
-  res.send(template.replace('<app />', appString));
+  res.send(template.replace('<!-- app -->', appString));
 });
 
-app.listen(8888, function () {
-  console.log('server is listening on 8888.')
+app.listen(8000, function () {
+  console.log('server is listening on 8000.')
 });
