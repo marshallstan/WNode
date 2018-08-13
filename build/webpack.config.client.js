@@ -1,10 +1,10 @@
-const path = require('path');
-const HTMLPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
-const baseConfig = require('./webpack.base');
+const path = require('path')
+const HTMLPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
+const webpackMerge = require('webpack-merge')
+const baseConfig = require('./webpack.base')
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development'
 
 const config = webpackMerge(baseConfig, {
   entry: {
@@ -18,7 +18,7 @@ const config = webpackMerge(baseConfig, {
       template: path.join(__dirname, '../client/template.html')
     })
   ]
-});
+})
 
 if (isDev) {
   config.entry = {
@@ -26,7 +26,7 @@ if (isDev) {
       'react-hot-loader/patch',
       path.join(__dirname, '../client/app.js')
     ]
-  };
+  }
   config.devServer = {
     host: '0.0.0.0',
     port: 8888,
@@ -35,8 +35,8 @@ if (isDev) {
     overlay: {errors: true},
     publicPath: '/public/',
     historyApiFallback: {index: '/public/index.html'}
-  };
-  config.plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
+  config.plugins.push(new webpack.HotModuleReplacementPlugin())
 }
 
-module.exports = config;
+module.exports = config
