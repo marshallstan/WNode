@@ -6,11 +6,11 @@ export default class App extends React.Component {
   componentDidMount() {}
   render() {
     return [
-      <div>
+      <div key="banner">
         <Link to="/" >Index</Link>
         <Link to="/detail" >Detail Page</Link>
       </div>,
-      <Routes />,
+      <Routes key="routes" />,
     ]
   }
 }
