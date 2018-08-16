@@ -34,7 +34,10 @@ if (isDev) {
     hot: true,
     overlay: {errors: true},
     publicPath: '/public/',
-    historyApiFallback: {index: '/public/index.html'}
+    historyApiFallback: {index: '/public/index.html'},
+    proxy: {
+      '/api': 'http://localhost:3333'
+    }
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
 }
