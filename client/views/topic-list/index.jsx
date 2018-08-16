@@ -6,7 +6,14 @@ import { AppState } from '../../store/app-state'
 @inject('appState')
 @observer
 export default class TopicList extends React.Component {
-  componentDidMount() {}
+  asyncBootstrap = () => (
+    new Promise((resolve) => {
+      setTimeout(() => {
+        this.props.appState.count = 5
+        resolve(true)
+      })
+    })
+  )
 
   changeName = (e) => {
     this.props.appState.changeName(e.target.value)
