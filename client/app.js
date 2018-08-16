@@ -5,14 +5,14 @@ import { Provider } from 'mobx-react'
 import { AppContainer } from 'react-hot-loader'
 import App from './views/App'
 
-import appState from './store/app-state'
+import AppState from './store/app-state'
 
 const renderMethod = module.hot ? ReactDom.render : ReactDom.hydrate
 const root = document.getElementById('root')
 const render = (Component) => {
   renderMethod(
     <AppContainer>
-      <Provider appState={appState}>
+      <Provider appState={new AppState()}>
         <BrowserRouter>
           <Component />
         </BrowserRouter>
