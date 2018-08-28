@@ -1,15 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import Routes from '../config/router'
+
+import AppBar from './layout/app-bar'
 
 export default class App extends React.Component {
   componentDidMount() {}
   render() {
     return [
-      <div key="banner">
-        <Link to="/" >Index</Link>
-        <Link to="/detail" >Detail Page</Link>
-      </div>,
+      <AppBar key="appBar" />,
       <Routes key="routes" />,
     ]
   }
