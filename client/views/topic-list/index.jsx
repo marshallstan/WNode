@@ -8,7 +8,7 @@ import List from '@material-ui/core/List'
 import CircularProgress from '@material-ui/core/CircularProgress'
 // import Button from '@material-ui/core/Button'
 
-import { AppState, TopicStore } from '../../store/store'
+import { AppState } from '../../store/store'
 import Container from '../layout/container'
 import TopicListItem from './list-item'
 
@@ -74,7 +74,11 @@ export default class TopicList extends React.Component {
         <List>
           {
             topicList.map(topic => (
-              <TopicListItem onClick={this.listItemClick} topic={topic} />
+              <TopicListItem
+                key={topic.id}
+                onClick={this.listItemClick}
+                topic={topic}
+              />
             ))
           }
         </List>
@@ -90,6 +94,6 @@ export default class TopicList extends React.Component {
 }
 
 TopicList.wrappedComponent.propTypes = {
-  appState: PropTypes.instanceOf(AppState),
-  topicStore: PropTypes.instanceOf(TopicStore)
+  appState: PropTypes.instanceOf(AppState).isRequired,
+  topicStore: PropTypes.object.isRequired
 }

@@ -35,6 +35,7 @@ export default class TopicStore {
   @action fetchTopics() {
     return new Promise((resolve, reject) => {
       this.syncing = true
+      this.topics = []
       get('/topics', {
         mdrender: false
       }).then((resp) => {

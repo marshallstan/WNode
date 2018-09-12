@@ -6,7 +6,7 @@ const parseUrl = (url, params) => {
   const str = Object.keys(params).reduce((result, key) => (
     `${result}${key}=${params[key]}&`
   ), '')
-  return `${baseUrl}/${url}?${str.substr(0, str.length - 1)}`
+  return `${baseUrl}/api${url}?${str.substr(0, str.length - 1)}`
 }
 
 export const get = (url, params) => (
