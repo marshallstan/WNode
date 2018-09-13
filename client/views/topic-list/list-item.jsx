@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 
 import ListItem from '@material-ui/core/ListItem'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
@@ -7,14 +8,22 @@ import ListItemText from '@material-ui/core/ListItemText'
 import { withStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 
+import { tabs } from '../../util/variable-define'
+
 import { topicPrimaryStyle, topicSecondaryStyle } from './styles'
 
-const Primary = ({ classes, topic }) => (
-  <div className={classes.root}>
-    <span className={classes.tab}>{topic.tab}</span>
-    <span className={classes.title}>{topic.title}</span>
-  </div>
-)
+const Primary = ({ classes, topic }) => {
+  const classNames = cx({
+    [classes.tab]: true,
+    [classes.top]: topic.top
+  })
+  return (
+    <div className={classes.root}>
+      <span className={classNames}>{topic.top ? 'TOP' : tabs[topic.tab]}</span>
+      <span className={classes.title}>{topic.title}</span>
+    </div>
+  )
+}
 const Secondary = ({ classes, topic }) => (
   <span className={classes.root}>
     <span className={classes.userName}>{topic.author.loginname}</span>

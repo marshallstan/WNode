@@ -1,3 +1,12 @@
+export const tabs = {
+  all: 'All',
+  share: 'Share',
+  job: 'Work',
+  ask: 'Question',
+  good: 'Masterwork',
+  dev: 'Test',
+}
+
 export const topicSchema = {
   id: '',
   author_id: '',
