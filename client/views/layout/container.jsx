@@ -20,7 +20,7 @@ const Container = ({ classes, children }) => (
 Container.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.arrayOf(PropTypes.node),
     PropTypes.element,
   ]),
 }
