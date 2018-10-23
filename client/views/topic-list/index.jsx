@@ -26,6 +26,13 @@ export default class TopicList extends React.Component {
     this.props.topicStore.fetchTopics(tab)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.search !== this.props.location.search) {
+      const tab = this.getTab(nextProps.location.search)
+      this.props.topicStore.fetchTopics(tab)
+    }
+  }
+
   asyncBootstrap = () => (
     new Promise((resolve) => {
       setTimeout(() => {
@@ -35,8 +42,9 @@ export default class TopicList extends React.Component {
     })
   )
 
-  getTab = () => {
-    const query = queryString.parse(this.props.location.search)
+  getTab = (search) => {
+    const searchText = search || this.props.location.search
+    const query = queryString.parse(searchText)
     return query.tab || 'all'
   }
 
@@ -81,7 +89,13 @@ export default class TopicList extends React.Component {
         </List>
         {
           syncingTopics &&
-            <div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                padding: '40px 0',
+              }}
+            >
               <CircularProgress color="secondary" size={100} />
             </div>
         }
