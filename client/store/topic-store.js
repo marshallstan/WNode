@@ -1,7 +1,7 @@
 import {
   observable,
   // toJS,
-  // computed,
+  computed,
   action,
   extendObservable
 } from 'mobx'
@@ -21,15 +21,25 @@ class Topic {
 
 export default class TopicStore {
   @observable topics
+  @observable details
   @observable syncing
 
-  constructor({ topics, syncing } = { topics: [], syncing: false }) {
+  constructor({ topics = [], syncing = false, details = [] } = {}) {
     this.syncing = syncing
     this.topics = topics.map(topic => new Topic(createTopic(topic)))
+    this.details = details.map(detail => new Topic(createTopic(detail)))
   }
 
   addTopic(topic) {
     this.topics.push(new Topic(createTopic(topic)))
+  }
+
+  @computed get detailMap() {
+    return this.details.reduce((result, detail) => {
+      const temp = result
+      temp[detail.id] = detail
+      return temp
+    }, {})
   }
 
   @action fetchTopics(tab) {
@@ -54,6 +64,29 @@ export default class TopicStore {
           reject(err)
           this.syncing = false
         })
+    })
+  }
+
+  @action getTopicDetail(id) {
+    return new Promise((resolve, reject) => {
+      if (this.detailMap[id]) {
+        resolve(this.detailMap[id])
+      } else {
+        get(`/topic/${id}`, {
+          mdrender: false
+        }).then((resp) => {
+          if (resp.success) {
+            const topic = new Topic(createTopic(resp.data))
+            this.details.push(topic)
+            resolve(topic)
+          } else {
+            reject()
+          }
+        })
+          .catch((err) => {
+            reject(err)
+          })
+      }
     })
   }
 }

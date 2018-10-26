@@ -1,47 +1,80 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
-// import marked from 'marked'
-// import Helmet from 'react-helmet'
+import PropTypes from 'prop-types'
+import marked from 'marked'
+import Helmet from 'react-helmet'
 import {
   inject,
   observer
 } from 'mobx-react'
 
-// import { withStyles } from '@material-ui/core/styles'
-// import Paper from '@material-ui/core/Paper'
-// import { CircularProgress } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import { CircularProgress } from '@material-ui/core'
 
 import Container from '../layout/container'
 
-// import { topicDetailStyle } from './styles'
-// import Reply from './reply'
+import { topicDetailStyle } from './styles'
+import Reply from './reply'
 
 @inject(stores => ({
   topicStore: stores.topicStore
 }))
 @observer
 class TopicDetail extends React.Component {
-  componentDidMount() {}
+  componentDidMount() {
+    const id = this.getTopicId()
+    this.props.topicStore.getTopicDetail(id)
+  }
+  getTopicId = () => this.props.match.params.id;
   render() {
-    // const { classes } = this.props
-    // const topic = this.props.topicStore.topics[0]
-    // if (!topic) {
-    //   return (
-    //     <Container>
-    //       <section className={classes.loadingContainer}>
-    //         <CircularProgress color="accent" />
-    //       </section>
-    //     </Container>
-    //   )
-    // }
+    const { classes } = this.props
+    const id = this.getTopicId()
+    const topic = this.props.topicStore.detailMap[id]
+    if (!topic) {
+      return (
+        <Container>
+          <section className={classes.loadingContainer}>
+            <CircularProgress color="accent" />
+          </section>
+        </Container>
+      )
+    }
     return (
       <div>
         <Container>
-          6
+          <Helmet>
+            <title>{topic.title}</title>
+          </Helmet>
+          <header className={classes.header}>
+            <h3>{topic.title}</h3>
+          </header>
+          <section className={classes.body}>
+            <p dangerouslySetInnerHTML={{ __html: marked(topic.content) }} />
+          </section>
         </Container>
+        <Paper elevation={4} className={classes.replies}>
+          <header className={classes.replyHeader}>
+            <span>{`${topic.reply_count}`}</span>
+            <span>{`最新回复 ${topic.last_reply_at}`}</span>
+          </header>
+          <section>
+            {
+              topic.replies.map(reply => <Reply reply={reply} key={reply.id} />)
+            }
+          </section>
+        </Paper>
       </div>
     )
   }
 }
 
-export default TopicDetail
+TopicDetail.wrappedComponent.propTypes = {
+  topicStore: PropTypes.object.isRequired
+}
+
+TopicDetail.propTypes = {
+  match: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(topicDetailStyle)(TopicDetail)

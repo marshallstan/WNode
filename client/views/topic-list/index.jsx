@@ -55,7 +55,9 @@ export default class TopicList extends React.Component {
     })
   }
 
-  listItemClick = () => {}
+  listItemClick = (topic) => {
+    this.props.history.push(`/detail/${topic.id}`)
+  }
 
   render() {
     const { topicStore } = this.props
@@ -81,7 +83,7 @@ export default class TopicList extends React.Component {
             topicList.map(topic => (
               <TopicListItem
                 key={topic.id}
-                onClick={this.listItemClick}
+                onClick={() => this.listItemClick(topic)}
                 topic={topic}
               />
             ))
