@@ -34,7 +34,7 @@ class TopicDetail extends React.Component {
       return (
         <Container>
           <section className={classes.loadingContainer}>
-            <CircularProgress color="accent" />
+            <CircularProgress color="primary" size={80} />
           </section>
         </Container>
       )
