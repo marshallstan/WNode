@@ -7,8 +7,8 @@ import { withStyles } from '@material-ui/core/styles'
 const styles = {
   root: {
     margin: 24,
-    marginTop: 80,
-  },
+    marginTop: 80
+  }
 }
 
 const Container = ({ classes, children }) => (
@@ -21,8 +21,8 @@ Container.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.element,
-  ]),
+    PropTypes.element
+  ])
 }
 
 export default withStyles(styles)(Container)
