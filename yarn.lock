@@ -53,6 +53,10 @@
     "@babel/runtime" "7.0.0-rc.1"
     recompose "^0.28.2"
 
+"@types/codemirror@^0.0.65":
+  version "0.0.65"
+  resolved "http://r.cnpmjs.org/@types/codemirror/download/@types/codemirror-0.0.65.tgz#5f8d546d40c9d2acb1166167aae9e70d1b9a83b7"
+
 "@types/jss@^9.5.3":
   version "9.5.4"
   resolved "http://r.cnpmjs.org/@types/jss/download/@types/jss-9.5.4.tgz#89a4ee32a14a8d2937187b1a7f443750e964a74d"
@@ -78,6 +82,10 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
+
+"@types/simplemde@^1.11.7":
+  version "1.11.7"
+  resolved "http://r.cnpmjs.org/@types/simplemde/download/@types/simplemde-1.11.7.tgz#c8bd9f54ff46db7f311a989004eb5815acedf429"
 
 abbrev@1:
   version "1.1.1"
@@ -1448,6 +1456,16 @@ co@^4.6.0:
 code-point-at@^1.0.0:
   version "1.1.0"
   resolved "http://r.cnpmjs.org/code-point-at/download/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
+
+codemirror-spell-checker@*:
+  version "1.1.2"
+  resolved "http://r.cnpmjs.org/codemirror-spell-checker/download/codemirror-spell-checker-1.1.2.tgz#1c660f9089483ccb5113b9ba9ca19c3f4993371e"
+  dependencies:
+    typo-js "*"
+
+codemirror@*:
+  version "5.41.0"
+  resolved "http://r.cnpmjs.org/codemirror/download/codemirror-5.41.0.tgz#57e245be197643c39440d2840236d3edc4bb1162"
 
 collection-visit@^1.0.0:
   version "1.0.0"
@@ -3697,7 +3715,7 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@^0.5.1:
+marked@*, marked@^0.5.1:
   version "0.5.1"
   resolved "http://r.cnpmjs.org/marked/download/marked-0.5.1.tgz#062f43b88b02ee80901e8e8d8e6a620ddb3aa752"
 
@@ -4702,6 +4720,14 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
+react-simplemde-editor@^3.6.21:
+  version "3.6.21"
+  resolved "http://r.cnpmjs.org/react-simplemde-editor/download/react-simplemde-editor-3.6.21.tgz#7b402ae3dce8587a7538097ea5fc9a0e7ffc134f"
+  dependencies:
+    "@types/codemirror" "^0.0.65"
+    "@types/simplemde" "^1.11.7"
+    simplemde "^1.11.2"
+
 react-transition-group@^2.2.1:
   version "2.4.0"
   resolved "http://r.cnpmjs.org/react-transition-group/download/react-transition-group-2.4.0.tgz#1d9391fabfd82e016f26fabd1eec329dbd922b5a"
@@ -5174,6 +5200,14 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "http://r.cnpmjs.org/signal-exit/download/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
+simplemde@^1.11.2:
+  version "1.11.2"
+  resolved "http://r.cnpmjs.org/simplemde/download/simplemde-1.11.2.tgz#a23a35d978d2c40ef07dec008c92f070d8e080e3"
+  dependencies:
+    codemirror "*"
+    codemirror-spell-checker "*"
+    marked "*"
+
 slash@^1.0.0:
   version "1.0.0"
   resolved "http://r.cnpmjs.org/slash/download/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
@@ -5609,6 +5643,10 @@ type-is@~1.6.15, type-is@~1.6.16:
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "http://r.cnpmjs.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
+
+typo-js@*:
+  version "1.0.3"
+  resolved "http://r.cnpmjs.org/typo-js/download/typo-js-1.0.3.tgz#54d8ebc7949f1a7810908b6002c6841526c99d5a"
 
 ua-parser-js@^0.7.18:
   version "0.7.18"

@@ -20,11 +20,11 @@ const styles = {
   }
 }
 
+@withRouter
 @inject(stores => ({
-  appState: stores.appState
+  user: stores.appState.user
 }))
 @observer
-@withRouter
 class MainAppBar extends React.Component {
   onHomeIconClick = () => {
     this.props.history.push('/list?tab=all')
@@ -33,7 +33,7 @@ class MainAppBar extends React.Component {
 
   }
   loginButtonClick = () => {
-    if (this.props.appState.user.isLogin) {
+    if (this.props.user.isLogin) {
       this.props.history.push('/user/info')
     } else {
       this.props.history.push('/user/login')
@@ -41,7 +41,7 @@ class MainAppBar extends React.Component {
   }
   render() {
     const { classes } = this.props
-    const { user } = this.props.appState
+    const user = this.props.user
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -57,7 +57,7 @@ class MainAppBar extends React.Component {
             </Button>
             <Button color="inherit" onClick={this.loginButtonClick}>
               {
-                user.isLogin ? user.info.loginname : 'Login'
+                user.info.loginname || 'Login'
               }
             </Button>
           </ToolBar>
@@ -68,7 +68,7 @@ class MainAppBar extends React.Component {
 }
 
 MainAppBar.wrappedComponent.propTypes = {
-  appState: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 }
 
 MainAppBar.propTypes = {

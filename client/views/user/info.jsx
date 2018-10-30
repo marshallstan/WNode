@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
+import dateFormat from 'dateformat'
 
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
@@ -12,42 +13,45 @@ import { withStyles } from '@material-ui/core/styles'
 import UserWrapper from './user'
 import infoStyles from './styles/user-info-style'
 
-const TopicItem = (({ topic }) => (
-  <ListItem>
+const TopicItem = (({ topic, onClick }) => (
+  <ListItem button onClick={onClick}>
     <Avatar src={topic.author.avatar_url} />
     <ListItemText
       primary={topic.title}
-      secondary={`The Latest reply：${topic.last_reply_at}`}
+      secondary={`The Latest reply：${dateFormat(topic.last_reply_at, 'yyyy-mm-dd')}`}
     />
   </ListItem>
 ))
 
 TopicItem.propTypes = {
-  topic: PropTypes.object.isRequired
+  topic: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired
 }
 
 @inject(stores => ({
   user: stores.appState.user,
-  // appState: stores.appState
+  appState: stores.appState
 }))
 @observer
 class UserInfo extends React.Component {
   componentWillMount() {
     if (!this.props.user.isLogin) {
       this.props.history.replace('/user/login')
+    } else {
+      this.props.appState.getUserDetail()
+      this.props.appState.getUserCollection()
     }
-    // this.props.appState.getUserDetail()
-    // this.props.appState.getUserCollection()
+  }
+
+  goToTopic = (id) => {
+    this.props.history.push(`/detail/${id}`)
   }
 
   render() {
     const { classes } = this.props
-    // const topics = this.props.user.detail.recent_topics
-    // const replies = this.props.user.detail.recent_replies
-    // const collections = this.props.user.collections.list
-    const topics = []
-    const replies = []
-    const collections = []
+    const topics = this.props.user.detail.recentTopics
+    const replies = this.props.user.detail.recentReplies
+    const collections = this.props.user.collections.list
     return (
       <UserWrapper>
         <div className={classes.root}>
@@ -60,7 +64,13 @@ class UserInfo extends React.Component {
                 <List>
                   {
                     topics.length > 0 ?
-                      topics.map(topic => <TopicItem topic={topic} key={topic.id} />) :
+                      topics.map(topic => (
+                        <TopicItem
+                          topic={topic}
+                          key={topic.id}
+                          onClick={() => this.goToTopic(topic.id)}
+                        />
+                      )) :
                       <Typography align="center">
                         No recently released topics
                       </Typography>
@@ -76,7 +86,13 @@ class UserInfo extends React.Component {
                 <List>
                   {
                     replies.length > 0 ?
-                      replies.map(topic => <TopicItem topic={topic} key={topic.id} />) :
+                      replies.map(topic => (
+                        <TopicItem
+                          topic={topic}
+                          key={topic.id}
+                          onClick={() => this.goToTopic(topic.id)}
+                        />
+                      )) :
                       <Typography align="center">
                         No new responses
                       </Typography>
@@ -92,7 +108,13 @@ class UserInfo extends React.Component {
                 <List>
                   {
                     collections.length > 0 ?
-                      collections.map(topic => <TopicItem topic={topic} key={topic.id} />) :
+                      collections.map(topic => (
+                        <TopicItem
+                          topic={topic}
+                          key={topic.id}
+                          onClick={() => this.goToTopic(topic.id)}
+                        />
+                      )) :
                       <Typography align="center">
                         No collections
                       </Typography>
@@ -108,7 +130,7 @@ class UserInfo extends React.Component {
 }
 
 UserInfo.wrappedComponent.propTypes = {
-  // appState: PropTypes.object.isRequired,
+  appState: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
 }
 
