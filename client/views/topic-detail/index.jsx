@@ -42,6 +42,7 @@ class TopicDetail extends React.Component {
     this.props.history.push('/user/login')
   };
   doReply = () => {
+    if (!this.state.newReply) return
     const id = this.getTopicId()
     const topic = this.props.topicStore.detailMap[id]
     topic.doReply(this.state.newReply)

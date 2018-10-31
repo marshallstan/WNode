@@ -34,7 +34,7 @@ TopicItem.propTypes = {
 }))
 @observer
 class UserInfo extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.appState.getUserDetail()
     this.props.appState.getUserCollection()
   }
