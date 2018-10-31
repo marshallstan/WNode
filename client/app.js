@@ -14,8 +14,8 @@ const theme = createMuiTheme({
   palette: {
     primary: pink,
     secondary: lightBlue,
-    type: 'light',
-  },
+    type: 'light'
+  }
 })
 
 const initialState = window.__INITIAL__STATE__ || {} // eslint-disable-line
@@ -36,7 +36,7 @@ const createApp = (TheApp) => {
 }
 
 const appState = new AppState()
-appState.init(initialState.appState)
+appState.init(initialState.appState || {})
 const topicStore = new TopicStore(initialState.topicStore)
 
 const renderMethod = module.hot ? ReactDom.render : ReactDom.hydrate

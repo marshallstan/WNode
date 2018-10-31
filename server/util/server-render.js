@@ -20,20 +20,26 @@ const getStoreState = (stores) => {
 
 module.exports = (bundle, template, req, res) => {
   return new Promise((resolve, reject) => {
+    const user = req.session.user
     const createStoreMap = bundle.createStoreMap
     const createApp = bundle.default
-
     const routerContext = {}
     const stores = createStoreMap()
+
+    if (user) {
+      stores.appState.user.info = user
+      stores.appState.user.isLogin = true
+    }
+
     const sheetsRegistry = new SheetsRegistry()
     const jss = create(preset())
     jss.options.createGenerateClassName = createGenerateClassName
     const theme = createMuiTheme({
       palette: {
         primary: colors.pink,
-        accent: colors.lightBlue,
-        type: 'light',
-      },
+        secondary: colors.lightBlue,
+        type: 'light'
+      }
     })
     const appContent = createApp(stores, routerContext, sheetsRegistry, jss, theme, req.url)
 
