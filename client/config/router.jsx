@@ -4,11 +4,13 @@ import TopicList from '../views/topic-list/index'
 import TopicDetail from '../views/topic-detail/index'
 import UserLogin from '../views/user/login'
 import UserInfo from '../views/user/info'
+import TopicCreate from '../views/topic-create'
 
 export default () => [
   <Route path="/" render={() => <Redirect to="/list" />} exact key="first" />,
   <Route path="/list" component={TopicList} exact key="list" />,
   <Route path="/detail/:id" component={TopicDetail} exact key="detail" />,
   <Route path="/user/login" component={UserLogin} exact key="login" />,
-  <Route path="/user/info" component={UserInfo} exact key="info" />
+  <Route path="/user/info" component={UserInfo} exact key="info" />,
+  <Route path="/topic/create" component={TopicCreate} exact key="create" />
 ]

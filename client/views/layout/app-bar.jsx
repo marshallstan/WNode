@@ -27,10 +27,10 @@ const styles = {
 @observer
 class MainAppBar extends React.Component {
   onHomeIconClick = () => {
-    this.props.history.push('/list?tab=all')
+    this.props.history.push('/')
   }
   createButtonClick = () => {
-
+    this.props.history.push('/topic/create')
   }
   loginButtonClick = () => {
     if (this.props.user.isLogin) {

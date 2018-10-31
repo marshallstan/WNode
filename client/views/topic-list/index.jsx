@@ -61,6 +61,8 @@ export default class TopicList extends React.Component {
 
   render() {
     const { topicStore } = this.props
+    const { user } = this.props.appState
+    const { createdTopics } = topicStore
     const topicList = topicStore.topics
     const syncingTopics = topicStore.syncing
     const tab = this.getTab()
@@ -78,6 +80,20 @@ export default class TopicList extends React.Component {
             ))
           }
         </Tabs>
+        <List style={{ backgroundColor: '#dfdfdf' }}>
+          {
+            createdTopics.map((topic) => {
+              topic.author = user.info
+              return (
+                <TopicListItem
+                  key={topic.id}
+                  onClick={() => this.listItemClick(topic)}
+                  topic={topic}
+                />
+              )
+            })
+          }
+        </List>
         <List>
           {
             topicList.map(topic => (
