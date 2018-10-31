@@ -2,10 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import marked from 'marked'
 import Helmet from 'react-helmet'
-import {
-  inject,
-  observer
-} from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'

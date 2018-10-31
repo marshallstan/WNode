@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, toJS } from 'mobx'
 
 import { post, get } from '../util/http'
 
@@ -14,6 +14,12 @@ export default class AppState {
     collections: {
       list: [],
       syncing: false
+    }
+  }
+
+  init({ user }) {
+    if (user) {
+      this.user = user
     }
   }
 
@@ -77,5 +83,11 @@ export default class AppState {
           this.user.collections.syncing = false
         })
     })
+  }
+
+  toJson() {
+    return {
+      user: toJS(this.user)
+    }
   }
 }

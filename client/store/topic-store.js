@@ -2,7 +2,8 @@ import {
   observable,
   computed,
   action,
-  extendObservable
+  extendObservable,
+  toJS
 } from 'mobx'
 import { topicSchema, replySchema } from '../util/variable-define'
 import { get, post } from '../util/http'
@@ -47,11 +48,13 @@ export default class TopicStore {
   @observable details
   @observable syncing
   @observable createdTopics = []
+  @observable tab
 
-  constructor({ topics = [], syncing = false, details = [] } = {}) {
+  constructor({ topics = [], syncing = false, details = [], tab = null } = {}) {
     this.syncing = syncing
     this.topics = topics.map(topic => new Topic(createTopic(topic)))
     this.details = details.map(detail => new Topic(createTopic(detail)))
+    this.tab = tab
   }
 
   addTopic(topic) {
@@ -68,24 +71,29 @@ export default class TopicStore {
 
   @action fetchTopics(tab) {
     return new Promise((resolve, reject) => {
-      this.syncing = true
-      this.topics = []
-      get('/topics', {
-        mdrender: false,
-        tab
-      }).then((resp) => {
-        if (resp.success) {
-          this.topics = resp.data.map(topic => new Topic(createTopic(topic)))
-          resolve()
-        } else {
-          reject()
-        }
-        this.syncing = false
-      })
-        .catch((err) => {
-          reject(err)
+      if (tab === this.tab && this.topics.length > 0) {
+        resolve()
+      } else {
+        this.tab = tab
+        this.syncing = true
+        this.topics = []
+        get('/topics', {
+          mdrender: false,
+          tab
+        }).then((resp) => {
+          if (resp.success) {
+            this.topics = resp.data.map(topic => new Topic(createTopic(topic)))
+            resolve()
+          } else {
+            reject()
+          }
           this.syncing = false
         })
+          .catch((err) => {
+            reject(err)
+            this.syncing = false
+          })
+      }
     })
   }
 
@@ -132,5 +140,14 @@ export default class TopicStore {
         })
         .catch(reject)
     })
+  }
+
+  toJson() {
+    return {
+      topics: toJS(this.topics),
+      details: toJS(this.details),
+      syncing: this.syncing,
+      tab: this.tab
+    }
   }
 }

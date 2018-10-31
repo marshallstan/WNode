@@ -13,12 +13,10 @@ import Container from '../layout/container'
 import TopicListItem from './list-item'
 import { tabs } from '../../util/variable-define'
 
-@inject(stores => (
-  {
-    appState: stores.appState,
-    topicStore: stores.topicStore
-  }
-))
+@inject(stores => ({
+  appState: stores.appState,
+  topicStore: stores.topicStore
+}))
 @observer
 export default class TopicList extends React.Component {
   componentDidMount() {
@@ -33,14 +31,13 @@ export default class TopicList extends React.Component {
     }
   }
 
-  asyncBootstrap = () => (
-    new Promise((resolve) => {
-      setTimeout(() => {
-        this.props.appState.count = 5
-        resolve(true)
-      })
-    })
-  )
+  asyncBootstrap = () => {
+    const query = queryString.parse(this.props.location.search)
+    const { tab } = query
+    return this.props.topicStore.fetchTopics(tab || 'all')
+      .then(() => true)
+      .catch(() => false)
+  }
 
   getTab = (search) => {
     const searchText = search || this.props.location.search
@@ -81,21 +78,22 @@ export default class TopicList extends React.Component {
           }
         </Tabs>
         {
-          createdTopics && createdTopics.length > 0 &&
-          <List style={{ backgroundColor: '#dfdfdf' }}>
-            {
-              createdTopics.map((topic) => {
-                topic.author = user.info
-                return (
-                  <TopicListItem
-                    key={topic.id}
-                    onClick={() => this.listItemClick(topic)}
-                    topic={topic}
-                  />
-                )
-              })
-            }
-          </List>
+          (createdTopics && createdTopics.length > 0) ?
+            <List style={{ backgroundColor: '#dfdfdf' }}>
+              {
+                createdTopics.map((topic) => {
+                  topic.author = user.info
+                  return (
+                    <TopicListItem
+                      key={topic.id}
+                      onClick={() => this.listItemClick(topic)}
+                      topic={topic}
+                    />
+                  )
+                })
+              }
+            </List> :
+            null
         }
         <List>
           {
@@ -109,7 +107,7 @@ export default class TopicList extends React.Component {
           }
         </List>
         {
-          syncingTopics &&
+          syncingTopics ?
             <div
               style={{
                 display: 'flex',
@@ -118,7 +116,8 @@ export default class TopicList extends React.Component {
               }}
             >
               <CircularProgress color="secondary" size={100} />
-            </div>
+            </div> :
+            null
         }
       </Container>
     )
