@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
+import { Redirect } from 'react-router-dom'
+import queryString from 'query-string'
 
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
@@ -23,18 +25,12 @@ class UserLogin extends React.Component {
     }
   }
 
-  componentWillMount() {
-    if (this.props.user.isLogin) {
-      this.props.history.replace('/user/info')
-    }
+  getFrom = (location) => {
+    location = location || this.props.location
+    const query = queryString.parse(location.search)
+    return query.from || '/user/info'
   }
 
-  // getFrom = (location) => {
-  //   location = location || this.props.location
-  //   const query = queryString.parse(location.search)
-  //   return query.from || '/user/info'
-  // }
-  //
   handleLogin = () => {
     if (!this.state.accesstoken) {
       return this.setState({
@@ -45,9 +41,6 @@ class UserLogin extends React.Component {
       helpText: ''
     })
     return this.props.appState.login(this.state.accesstoken)
-      .then(() => {
-        this.props.history.replace('/user/info')
-      })
       .catch((err) => {
         console.log(err)
       })
@@ -60,15 +53,11 @@ class UserLogin extends React.Component {
   }
 
   render() {
-    const classes = this.props.classes
-    // const isLogin = this.props.user.isLogin
-    // const from = this.getFrom()
+    const { classes } = this.props
+    const { isLogin } = this.props.user
+    const from = this.getFrom()
 
-    // if (isLogin) {
-    //   return (
-    //     <Redirect to={from} />
-    //   )
-    // }
+    if (isLogin) return <Redirect to={from} />
 
     return (
       <UserWrapper>
@@ -98,19 +87,12 @@ class UserLogin extends React.Component {
 
 UserLogin.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.object
+  location: PropTypes.object.isRequired
 }
 
 UserLogin.wrappedComponent.propTypes = {
   appState: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  // location: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 }
 
 export default withStyles(loginStyles)(UserLogin)
-// export default withStyles(loginStyles)(inject((stores) => {
-//   return {
-//     appState: stores.appState,
-//     user: stores.appState.user
-//   }
-// })(observer(UserLogin)))

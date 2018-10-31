@@ -1,9 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  inject,
-  observer
-} from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 import SimpleMDE from 'react-simplemde-editor'
 
 import TextField from '@material-ui/core/TextField'
