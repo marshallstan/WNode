@@ -31,6 +31,7 @@ module.exports = (bundle, template, req, res) => {
 
     const sheetsRegistry = new SheetsRegistry()
     const generateClassName = createGenerateClassName()
+    const sheetsManager = new Map()
     const theme = createMuiTheme({
       palette: {
         primary: colors.pink,
@@ -39,7 +40,7 @@ module.exports = (bundle, template, req, res) => {
       }
     })
 
-    const appContent = createApp(stores, routerContext, sheetsRegistry, generateClassName, theme, req.url)
+    const appContent = createApp(stores, routerContext, sheetsRegistry, generateClassName, sheetsManager, theme, req.url)
 
     asyncBootstrap(appContent).then(() => {
       if (routerContext.url) {
