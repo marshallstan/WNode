@@ -10,11 +10,11 @@ import { createStoreMap } from './store/store'
 
 useStaticRendering(true)
 
-export default (stores, routerContext, sheetsRegistry, jss, theme, url) => (
+export default (stores, routerContext, sheetsRegistry, generateClassName, theme, url) => (
   <Provider {...stores}>
     <StaticRouter context={routerContext} location={url}>
-      <JssProvider registry={sheetsRegistry} jss={jss}>
-        <MuiThemeProvider theme={theme}>
+      <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+        <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
           <App />
         </MuiThemeProvider>
       </JssProvider>

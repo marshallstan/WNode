@@ -5,8 +5,6 @@ const ReactDomServer = require('react-dom/server')
 const Helmet = require('react-helmet').default
 
 const SheetsRegistry = require('react-jss').SheetsRegistry
-const create = require('jss').create
-const preset = require('jss-preset-default').default
 const createMuiTheme = require('@material-ui/core/styles').createMuiTheme
 const createGenerateClassName = require('@material-ui/core/styles/createGenerateClassName').default
 const colors = require('@material-ui/core/colors')
@@ -32,8 +30,7 @@ module.exports = (bundle, template, req, res) => {
     }
 
     const sheetsRegistry = new SheetsRegistry()
-    const jss = create(preset())
-    jss.options.createGenerateClassName = createGenerateClassName
+    const generateClassName = createGenerateClassName()
     const theme = createMuiTheme({
       palette: {
         primary: colors.pink,
@@ -41,12 +38,13 @@ module.exports = (bundle, template, req, res) => {
         type: 'light'
       }
     })
-    const appContent = createApp(stores, routerContext, sheetsRegistry, jss, theme, req.url)
+
+    const appContent = createApp(stores, routerContext, sheetsRegistry, generateClassName, theme, req.url)
 
     asyncBootstrap(appContent).then(() => {
       if (routerContext.url) {
         res.status(302).setHeader('Location', routerContext.url)
-        res.send()
+        res.end()
         return
       }
       const helmet = Helmet.rewind()
