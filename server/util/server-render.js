@@ -33,6 +33,9 @@ module.exports = (bundle, template, req, res) => {
     const generateClassName = createGenerateClassName()
     const sheetsManager = new Map()
     const theme = createMuiTheme({
+      typography: {
+        useNextVariants: true
+      },
       palette: {
         primary: colors.pink,
         secondary: colors.lightBlue,

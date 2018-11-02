@@ -72,7 +72,7 @@ class UserLogin extends React.Component {
             className={classes.input}
           />
           <Button
-            variant="raised"
+            variant="contained"
             color="primary"
             onClick={this.handleLogin}
             className={classes.loginButton}

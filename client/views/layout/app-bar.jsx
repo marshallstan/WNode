@@ -49,10 +49,10 @@ class MainAppBar extends React.Component {
             <IconButton color="inherit" onClick={this.onHomeIconClick}>
               <HomeIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" className={classes.flex}>
+            <Typography variant="h6" color="inherit" className={classes.flex}>
               WNode
             </Typography>
-            <Button variant="raised" color="primary" onClick={this.createButtonClick}>
+            <Button variant="contained" color="primary" onClick={this.createButtonClick}>
               Create New
             </Button>
             <Button color="inherit" onClick={this.loginButtonClick}>

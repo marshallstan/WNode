@@ -127,7 +127,7 @@ class TopicDetail extends React.Component {
                 </Button>
               </section> :
               <section className={classes.notLoginButton}>
-                <Button variant="raised" color="primary" onClick={this.goToLogin}>
+                <Button variant="contained" color="primary" onClick={this.goToLogin}>
                   Login In and Reply
                 </Button>
               </section>

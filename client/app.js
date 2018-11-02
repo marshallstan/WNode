@@ -4,19 +4,24 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'mobx-react'
 import { AppContainer } from 'react-hot-loader'
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import JssProvider from 'react-jss/lib/JssProvider'
+import { MuiThemeProvider, createMuiTheme, createGenerateClassName } from '@material-ui/core/styles'
 import { lightBlue, pink } from '@material-ui/core/colors'
 
 import App from './views/App'
 import { AppState, TopicStore } from './store/store'
 
 const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true
+  },
   palette: {
     primary: pink,
     secondary: lightBlue,
     type: 'light'
   }
 })
+const generateClassName = createGenerateClassName()
 
 const initialState = window.__INITIAL__STATE__ || {} // eslint-disable-line
 
@@ -46,9 +51,11 @@ const render = (Component) => {
     <AppContainer>
       <Provider appState={appState} topicStore={topicStore}>
         <BrowserRouter>
-          <MuiThemeProvider theme={theme}>
-            <Component />
-          </MuiThemeProvider>
+          <JssProvider generateClassName={generateClassName}>
+            <MuiThemeProvider theme={theme}>
+              <Component />
+            </MuiThemeProvider>
+          </JssProvider>
         </BrowserRouter>
       </Provider>
     </AppContainer>, root,
