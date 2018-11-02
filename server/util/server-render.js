@@ -1,6 +1,6 @@
 const serialize = require('serialize-javascript')
 const ejs = require('ejs')
-const asyncBootstrap = require('react-async-bootstrapper').default
+const asyncBootstrap = require('react-async-bootstrapper')
 const ReactDomServer = require('react-dom/server')
 const Helmet = require('react-helmet').default
 
@@ -62,7 +62,7 @@ module.exports = (bundle, template, req, res) => {
         title: helmet.title.toString(),
         style: helmet.style.toString(),
         link: helmet.link.toString(),
-        materialCss: sheetsRegistry.toString(),
+        materialCss: sheetsRegistry.toString()
       })
       res.send(html)
       resolve()

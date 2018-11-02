@@ -31,13 +31,13 @@ class TopicDetail extends React.Component {
     const id = this.getTopicId()
     this.props.topicStore.getTopicDetail(id)
   }
-  getTopicId = () => this.props.match.params.id;
+  getTopicId = () => this.props.match.params.id
   handleNewReplyChange = (newReply) => {
     this.setState({ newReply })
-  };
+  }
   goToLogin = () => {
     this.props.history.push('/user/login')
-  };
+  }
   doReply = () => {
     if (!this.state.newReply) return
     const id = this.getTopicId()

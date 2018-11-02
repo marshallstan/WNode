@@ -31,7 +31,7 @@ export default class TopicList extends React.Component {
     }
   }
 
-  asyncBootstrap = () => {
+  bootstrap = () => {
     const query = queryString.parse(this.props.location.search)
     const { tab } = query
     return this.props.topicStore.fetchTopics(tab || 'all')
