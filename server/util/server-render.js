@@ -4,9 +4,9 @@ const asyncBootstrap = require('react-async-bootstrapper').default
 const ReactDomServer = require('react-dom/server')
 const Helmet = require('react-helmet').default
 
-const SheetsRegistry = require('react-jss').SheetsRegistry
+const SheetsRegistry = require('jss').SheetsRegistry
 const createMuiTheme = require('@material-ui/core/styles').createMuiTheme
-const createGenerateClassName = require('@material-ui/core/styles/createGenerateClassName').default
+const createGenerateClassName = require('@material-ui/core/styles').createGenerateClassName
 const colors = require('@material-ui/core/colors')
 
 const getStoreState = (stores) => {
