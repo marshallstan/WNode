@@ -44,7 +44,8 @@ const appState = new AppState()
 appState.init(initialState.appState || {})
 const topicStore = new TopicStore(initialState.topicStore)
 
-const renderMethod = module.hot ? ReactDom.render : ReactDom.hydrate
+// const renderMethod = module.hot ? ReactDom.render : ReactDom.hydrate
+const renderMethod = ReactDom.render
 const root = document.getElementById('root')
 const render = (Component) => {
   renderMethod(
@@ -58,7 +59,7 @@ const render = (Component) => {
           </JssProvider>
         </BrowserRouter>
       </Provider>
-    </AppContainer>, root,
+    </AppContainer>, root
   )
 };
 
